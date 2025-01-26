@@ -129,7 +129,7 @@ A virtual guide that generates personalized itineraries and provides day-wise tr
 ---
 
 ## Project Associates  
-1. Shreeharsh Joshi  
-2. Shreyas C  
-3. Sinchana Poojary  
-4. Sreevalli R  
+1. [Shreeharsh Joshi](https://github.com/sharshj) 
+2. [Shreyas C](https://github.com/shrey1610) 
+3. [Sinchana Poojary](https://github.com/sinchnapoojary) 
+4. [Sreevalli R](https://github.com/sreevallireddy) 
