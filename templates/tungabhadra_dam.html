@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tungabhadra Dam</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      padding-top: 20px;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+    #result {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 15px;
+    }
+    #status {
+      font-size: 1em;
+      color: #888;
+      margin-top: 10px;
+    }
+    .details {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .details h2 {
+      color: #333;
+      font-size: 1.3em;
+    }
+    .details p {
+      margin: 10px 0;
+    }
+    .reviews {
+      margin: 20px;
+      text-align: left;
+    }
+    .reviews h2 {
+      font-size: 1.3em;
+      color: #333;
+    }
+    .review {
+      margin-bottom: 10px;
+      padding: 5px 0;
+    }
+    .review p {
+      margin: 5px 0;
+    }
+    .review strong {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Tungabhadra Dam</h1>
+  <img src="images/TBdam.jpg" alt="Tungabhadra Dam">
+  <p>Enjoy scenic views at Tungabhadra Dam.</p>
+
+  <div class="details">
+    <h2>Description:</h2>
+    <p>Tungabhadra Dam (TB Dam) is a multipurpose dam built across the Tungabhadra River in Hosapete, Ballari district. The dam is one of the significant attractions for visitors to Hampi. The Tunga Bhadra reservoir has a storage capacity of 101 TMC, with its catchment area covering 28,000 square kilometers. The dam stands at a height of 49.5 meters and has about 33 crest gates.</p>
+
+    <h2>Address:</h2>
+    <p>787W+QH5, Hosapete, Karnataka 583225</p>
+
+    <h2>Phone:</h2>
+    <p>080 2235 2828</p>
+
+    <h2>Hours:</h2>
+    <p>8 AM - 6:30 PM</p>
+
+    <h2>Best Visiting Timings</h2>
+    <p>Evening (4 PM - 6 PM) for pleasant weather and the musical fountain show.</p>
+  </div>
+
+  <div class="reviews">
+    <h2>Reviews:</h2>
+    <div class="review">
+      <strong>Anil Kumar:</strong>
+      <p>Amazing place to visit with family and friends. The view from the top of the dam is breathtaking. Highly recommend the sunset visit!</p>
+    </div>
+    <div class="review">
+      <strong>Sneha Rao:</strong>
+      <p>The lush green surroundings and peaceful atmosphere make Tungabhadra Dam a must-visit. Perfect for nature lovers and photographers.</p>
+    </div>
+    <div class="review">
+      <strong>Ramesh Gupta:</strong>
+      <p>Well-maintained and serene. The park near the dam is ideal for picnics, and the boating experience is enjoyable.</p>
+    </div>
+    <div class="review">
+      <strong>Kavita Sharma:</strong>
+      <p>A grand structure with historical importance. The expansive water view is mesmerizing, and it's a great spot for a day trip.</p>
+    </div>
+    <div class="review">
+      <strong>Pradeep Menon:</strong>
+      <p>The perfect combination of engineering marvel and natural beauty. The sound of water gushing from the gates is powerful and awe-inspiring.</p>
+    </div>
+  </div>
+
+  <p id="result" style="display: none;">
+    <strong>Predicted Crowd Level:</strong> <span id="predicted-crowd"></span>% <br>
+    <span id="message"></span>
+  </p>
+
+  <script>
+    // Fetch the crowd prediction data
+    fetch('/predict_crowd', { method: 'GET' })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('status').style.display = 'none';
+
+        if (data.error) {
+          document.getElementById('status').textContent = 
+            "Unable to fetch prediction data. Please try again later.";
+          document.getElementById('status').style.display = 'block';
+          return;
+        }
+
+        document.getElementById('predicted-crowd').textContent = data.predicted_crowd;
+        document.getElementById('message').textContent = data.message;
+        document.getElementById('result').style.display = 'block';
+      })
+      .catch(error => {
+        console.error("Error fetching prediction:", error);
+        document.getElementById('status').textContent = 
+          "Error predicting crowd levels. Please try again later.";
+      });
+  </script>
+
+</body>
+</html>

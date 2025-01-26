@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotels in Hospet</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+     /* Navbar Styles */
+     .navbar {
+  background-color: #333;
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+  box-sizing: border-box; /* Ensure padding doesn't increase the width */
+}
+
+
+.navbar a {
+  display: block;
+  color: white;
+  text-align: left;
+  padding: 14px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #444;
+  padding-left: 0; /* Extend hover effect to the left edge */
+}
+
+.navbar a::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar .active {
+  background-color: #444;
+  padding-left: 0;
+}
+
+    .content {
+      margin-left: 220px;
+      padding: 20px;
+    }
+
+    .hotels-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+     .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      cursor: pointer;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .card-content h3 {
+      color: #333;
+      margin: 0 0 5px;
+    }
+
+    .rating {
+      color: #f5c518;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      margin: 0;
+      color: #333;
+    }
+
+    .modal-content h4 {
+      color: #333;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .modal-content .facilities {
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .modal-content .facilities span {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .modal-content .facilities i {
+      margin-right: 10px;
+      color: #333;
+    }
+
+    .close-btn {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .close-btn:hover {
+      background-color: #444;
+    }
+
+    @media (max-width: 800px) {
+      .hotels-container {
+        grid-template-columns: 1fr;
+      }
+
+      .content {
+        margin-left: 0;
+      }
+
+      .navbar {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="hospet.html">Home</a>
+    <a href="hospet_hotels.html" class="active">Hotel</a>
+    <a href="hospet_things_to_do.html">Things to Do</a>
+    <a href="hospet_restaurants.html">Cafe and Chats</a>
+  </div>
+
+  <div class="content">
+    <h1>Hotels in Hospet</h1>
+    <div class="hotels-container">
+      <div class="card" onclick="openModal('HOTEL MALLIGI', ['wifi', 'parking', 'restaurant', 'pool'], '10/90, J.N Road, Hospet, Karnataka 583201')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdH93kCcSWi1ODDP1ltN-w6EW9on_Sow3Y2Q&s" alt="HOTEL MALLIGI">
+        <div class="card-content">
+          <h3>HOTEL MALLIGI</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 4.1/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('VIJAYSREE RESORTS', ['wifi', 'parking', 'restaurant', 'air_conditioning'], '3 km from Hampi, Hospet, Karnataka 583239')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNEniZnOY5NXYskjDeluA8bx7YRl9JhqciA&s" alt="VIJAYSREE RESORTS">
+        <div class="card-content">
+          <h3>VIJAYSREE RESORTS</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 3.7/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('HOTEL HAMPI INTERNALTIONAL', ['wifi', 'parking', 'restaurant'], 'Opposite Railway Station, Hospet, Karnataka 583201')">
+        <img src="images/hospet3.jpg" alt="HOTEL HAMPI INTERNALTIONAL">
+        <div class="card-content">
+          <h3>HOTEL ANANTH RESIDENCY</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 3.5/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('ROYAL ORCHID CENTRAL', ['wifi', 'parking', 'restaurant', 'bar'], 'Railway Station Rd, Hospet, Karnataka 583201')">
+        <img src="images/hospet4.jpg" alt="ROYAL ORCHID CENTRAL">
+        <div class="card-content">
+          <h3>ROYAL ORCHID CENTRAL</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 4.0/5
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="hotelModal">
+    <div class="modal-content">
+      <h3 id="hotelName"></h3>
+      <div class="facilities">
+        <h4>FACILITIES</h4>
+        <div id="hotelFacilities"></div>
+      </div>
+      <div class="location">
+        <h4>LOCATION</h4>
+        <p id="hotelLocation"></p>
+      </div>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const facilityIcons = {
+      wifi: '<i class="fas fa-wifi"></i> Wi-Fi',
+      pool: '<i class="fas fa-swimming-pool"></i> Pool',
+      parking: '<i class="fas fa-parking"></i> Parking',
+      air_conditioning: '<i class="fas fa-wind"></i> Air Conditioning',
+      restaurant: '<i class="fas fa-utensils"></i> Restaurant',
+      bar: '<i class="fas fa-cocktail"></i> Bar'
+    };
+
+    function openModal(name, facilities, address) {
+      document.getElementById('hotelName').innerText = name;
+      document.getElementById('hotelLocation').innerText = address;
+      const facilitiesContainer = document.getElementById('hotelFacilities');
+      facilitiesContainer.innerHTML = facilities
+        .map(facility => `<span>${facilityIcons[facility] || facility}</span>`)
+        .join('');
+      document.getElementById('hotelModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('hotelModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

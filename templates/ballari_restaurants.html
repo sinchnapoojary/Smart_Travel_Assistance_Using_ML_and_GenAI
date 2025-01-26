@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafe and Chats</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+  
+    /* Left Navigation Bar Styles */
+    nav {
+      width: 200px;
+      background-color: #333;
+      height: 100%;
+      padding-top: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+  
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  
+    nav ul li {
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      padding: 12px 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    /* Hover effect on links */
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #444;
+      padding-left: 0;
+    }
+    /* Main content container */
+    .main-content {
+      margin-left: 220px;
+      padding: 20px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      flex-grow: 1;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      padding: 40px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      width: 350px;
+      height: 450px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      flex-direction: column;
+    }
+
+    .card img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      color: #333;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .back-link {
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      background-color: #444;
+    }
+
+    .back-link-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 1);
+      padding: 20px;
+      z-index: 1000;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    #modal-content {
+      text-align: left;
+    }
+
+    #modal h2 {
+      font-size: 28px;
+      color: #333;
+    }
+
+    #modal p {
+      font-size: 18px;
+      color: #666;
+      margin-top: 15px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .rating span {
+      color: gold;
+      margin-left: 5px;
+    }
+
+    #modal button {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    #modal button:hover {
+      background-color: #444;
+    }
+
+    #modal-reviews {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .card-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 80%;
+      }
+
+      nav {
+        width: 100%;
+        height: auto;
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="ballari.html">Home</a></li>
+      <li><a href="ballari_hotels.html">Hotel</a></li>
+      <li><a href="ballari_things_to_do.html">Things to do</a></li>
+      <li><a href="ballari_restaurants.html" class="active">Cafe and Chats</a></li>
+    </ul>
+  </nav>
+
+  <div class="main-content">
+    <h1>Cafes and Chats in Ballari</h1>
+
+    <div class="card-container">
+      <div class="card" onclick="showDetails('Tree Shade')">
+        <img src="https://lh3.googleusercontent.com/p/AF1QipMTEUgi2Za6RQSNpbdL9DR7Db04PLpHrHFHK7-C=s1360-w1360-h1020" alt="Tree Shade">
+        <div>
+          <h3>Tree Shade</h3>
+          <p>Craving something spicy and comforting on a rainy day? Dive into our piping hot Dal Khichdi at Tree Shade – the perfect blend of warmth and flavor!</p>
+        </div>
+      </div>
+      <div class="card" onclick="showDetails('Cubes')">
+        <img src="https://b.zmtcdn.com/data/pictures/1/20088761/e207cd42f6af0cb435e74f2f0bd632a3.jpg" alt="Cubes">
+        <div>
+          <h3>Cubes</h3>
+          <p>Experience the best of café culture at Cubes Café. From our unique décor to our delicious menu, we've got something for everyone!</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="showDetails('Ramleela')">
+        <img src="https://content3.jdmagicbox.com/comp/bellary/a4/9999p8392.8392.180303213606.i1a4/catalogue/shankar-pani-puri-chat-center-bellary-sweet-shops-hkbcw.jpg" alt="Ramleela">
+        <div>
+          <h3>Ramleela</h3>
+          <p>Presenting you a Best affordable cafe in Bellary.</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="showDetails('Momo Point')">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.tSqvEeQuB03Q7O8RSWo7nwHaEb&pid=Api&P=0&h=180" alt="Momo Point">
+        <div>
+          <h3>Momo Point</h3>
+          <p>Momo Food Point is a popular eatery known for its vibrant and inviting atmosphere. It offers a cozy space for food lovers to enjoy quick, flavorful bites.</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="showDetails('Revive Cafe')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLwZXVKRYf8ck5mK4oAd9cLPC78SPMte9AVg&s" alt="Revive Cafe">
+        <div>
+          <h3>Revive Cafe</h3>
+          <p> Has all you can eat · Has outdoor seating · Serves vegan dishes</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="showDetails('Ice Jungle')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW5m1Xfl2P5RuN5pgCqK2SW_ps-NAAzJLs-g&s" alt="Ice Jungle">
+        <div>
+          <h3>Ice Jungle</h3>
+          <p>Beautiful place to enjoy ice cream, North Indian, milk shakes, sandwiches etc. Yummy and comes to ambience part no where in India with pine wood interiors, feels like sitting in jungle.</p>
+        </div>
+      </div>
+      <!-- More cards go here -->
+    </div>
+
+    <div class="back-link-container">
+      <a href="ballari.html" class="back-link">Back to Ballari</a>
+    </div>
+  </div>
+
+  <div id="modal">
+    <div id="modal-content">
+      <h2 id="modal-title"></h2>
+      <p id="modal-description"></p>
+      <div id="modal-address"></div>
+      <div id="modal-hours"></div>
+      <div id="modal-phone"></div>
+      <div id="modal-rating" class="rating"></div>
+      <div id="modal-amount"></div>
+      <div id="modal-reviews"></div>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function showDetails(cafe) {
+      const details = {
+        "Tree Shade": {
+          title: "Tree Shade",
+          description: "A serene cafe surrounded by trees, perfect for a relaxing time.",
+          address: "beside Ballari Hrudayalaya Hospital, KHB Colony, Basaveshwar Nagar, Gandhi Nagar, Ballari, Karnataka 583103",
+          hours: "Sunday to Saturday: 2 pm – 10 pm",
+          phone: "070800 14320",
+          rating: "⭐⭐⭐⭐☆",
+          amount: "₹200 - ₹400",
+          reviews: [
+            "A cozy spot! Loved the Dal Khichdi! - Priya",
+            "The ambiance is so calming. Perfect for weekends! - Rohan",
+            "Friendly staff and great coffee! - Ananya"
+          ]
+        },
+        "Cubes": {
+          title: "Cubes",
+          description: "A trendy cafe offering a variety of beverages and snacks.",
+          address: "Infantry Road, Beside Nexa Showroom, Inna Reddy Colony, Siddartha Nagar, Devi Nagar, Ballari, Karnataka 583104",
+          hours: "Sunday to Saturday: 10 am – 10 pm",
+          phone: "070909 12340",
+          rating: "⭐⭐⭐⭐⭐",
+          amount: "₹200 - ₹400",
+          reviews: [
+            "Best café experience in town! - Deepak",
+            "The decor is amazing, and so is the coffee! - Meera",
+            "Perfect place for a quick snack. - Kiran"
+          ]
+        },
+        "Ramleela": {
+          title: "Ramleela",
+          description: "A popular spot for snacks, especially for chat lovers.",
+          address: "Bks Hospital, opposite 1st Cross Road, Sidiginamola, Ballari, Karnataka 583101",
+          hours: "Sunday to Saturday: 5 pm – 10 pm",
+          phone: "070909 12340",
+          rating: "⭐⭐⭐⭐☆",
+          amount: "₹150 - ₹300",
+          reviews: [
+            "Great ambiance for working or chilling! - Vivek",
+            "Try their signature espresso! - Nisha",
+            "Friendly staff and delicious coffee. - Arvind"
+          ]
+        },
+        "Momo Point": {
+          title: "Momo Point",
+          description: "A delightful place for momos and quick bites.",
+          address: "Shop No-28, Navodaya catholic Complex, opposite Vims, Housing Board Colony, Cantonment, Ballari, Karnataka 583104",
+          hours: "Sunday to Saturday: 10 am – 9 pm",
+          phone: "080910 56780",
+          rating: "⭐⭐⭐⭐☆",
+          amount: "₹100 - ₹250",
+          reviews:[
+            "The best momos I’ve ever had! Must try the spicy Schezwan dip! - Akshay",
+            "Great taste and affordable prices. Highly recommended. - Neha",
+            "Loved the chicken momos, they were juicy and flavorful! - Arvind"
+          ]
+        },
+        "Revive Cafe": {
+          title: "Revive Cafe",
+          description: "A cozy spot near the zoo, offering great coffee and snacks.",
+          address: "Sudharshan Naidu St, near zoo, below mostwanted game zone, bhaskar, Radio Park Cowl Bazar, Cowl Bazaar, Ballari, Karnataka 583102",
+          hours: "Sunday to Saturday: 11 am – 10 pm",
+          phone: "081112 34567",
+          rating: "⭐⭐⭐⭐☆",
+          amount: "₹150 - ₹300",
+          reviews:[
+            "The Pani Puri here is to die for! - Arjun",
+            "Loved the variety of chaats. Great taste! - Kavya",
+            "Good spot for evening snacks with friends. - Mahesh"
+          ]
+        },
+        "Ice Jungle": {
+          title: "Ice Jungle",
+          description: "A perfect place to enjoy desserts and beverages.",
+          address: "Dr RajKumar Road beside bda Football stadium, Ballari, Karnataka 583101",
+          hours: "Sunday to Saturday: 12 pm – 11 pm",
+          phone: "091234 56789",
+          rating: "⭐⭐⭐⭐⭐",
+          amount: "₹150 - ₹350",
+          reviews:[
+            "Best filter coffee in town! - Suresh",
+            "Perfect way to start the day. - Sunita",
+            "Loved the traditional vibe and taste. - Anjali"
+          ]
+        }
+        // Add similar details for other cafes
+      };
+
+      const cafeDetails = details[cafe];
+      document.getElementById('modal-title').textContent = cafeDetails.title;
+      document.getElementById('modal-description').textContent = cafeDetails.description;
+      document.getElementById('modal-address').textContent = `Address: ${cafeDetails.address}`;
+      document.getElementById('modal-hours').textContent = `Hours: ${cafeDetails.hours}`;
+      document.getElementById('modal-phone').textContent = `Phone: ${cafeDetails.phone}`;
+      document.getElementById('modal-rating').innerHTML = `Rating: ${cafeDetails.rating}`;
+      document.getElementById('modal-amount').textContent = `Approximate Cost: ${cafeDetails.amount}`;
+      document.getElementById('modal-reviews').innerHTML = `Customer Reviews: <ul>${cafeDetails.reviews.map(review => `<li>${review}</li>`).join('')}</ul>`;
+      document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

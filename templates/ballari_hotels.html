@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotels in Ballari</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+  background-color: #333;
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+  box-sizing: border-box; /* Ensure padding doesn't increase the width */
+}
+
+
+.navbar a {
+  display: block;
+  color: white;
+  text-align: left;
+  padding: 14px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #444;
+  padding-left: 0; /* Extend hover effect to the left edge */
+}
+
+.navbar a::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar .active {
+  background-color: #444;
+  padding-left: 0;
+}
+
+
+    .content {
+      margin-left: 220px;
+      padding: 20px;
+    }
+
+    .hotels-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      cursor: pointer;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .card-content h3 {
+      color: #333;
+      margin: 0 0 5px;
+    }
+
+    .rating {
+      color: #f5c518;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      margin: 0;
+      color: #333;
+    }
+      
+    /* Styling for new section headings */
+.modal-content h4 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.modal-content .location p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+    .modal-content .facilities {
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .modal-content .facilities span {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .modal-content .facilities i {
+      margin-right: 10px;
+      color: #333;
+    }
+
+    .close-btn {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .close-btn:hover {
+      background-color: #444;
+    }
+
+    @media (max-width: 800px) {
+      .hotels-container {
+        grid-template-columns: 1fr;
+      }
+
+      .content {
+        margin-left: 0;
+      }
+
+      .navbar {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <a href="ballari.html">Home</a>
+    <a href="ballari_hotels.html" class="active">Hotel</a>
+    <a href="ballari_things_to_do.html">Things to Do</a>
+    <a href="ballari_restaurants.html">Cafe and Chats</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h1>Hotels in Ballari</h1>
+    <div class="hotels-container">
+      <div class="card" onclick="openModal('HOTEL BALA REGENCY', ['wifi', 'parking', 'spa', 'air_conditioning', 'room_service'], 'Parvathi Nagar Main Road, Ballari, Karnataka 583103')">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.NyqnqXE5ikwyV3N0ccNElgHaFj&pid=Api&P=0&h=180" alt="HOTEL BALA REGENCY">
+        <div class="card-content">
+          <h3>HOTEL BALA REGENCY</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 3.8/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('HOTEL ALLUM GOKULAM PARK', ['wifi', 'parking', 'restaurant', 'air_conditioning', 'bar'], 'Beside Allum Bhavan, A.D.City, by pass of, Bellary - Uravakonda - Anantapur Rd, Ballari, Karnataka 583101')">
+        <img src="images/placeholder2.png" alt="HOTEL ALLUM GOKULAM PARK">
+        <div class="card-content">
+          <h3>HOTEL ALLUM GOKULAM PARK</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 3.9/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('HOTEL ROYAL FORT', ['wifi', 'pool', 'parking', 'air_conditioning', 'room_service'], '5W23+9C2, New Trunk Road., Infantry Road, Housing Board Colony, Sanjay Gandhi Nagar, Ballari, Karnataka 583104')">
+        <img src="images/placeholder3.png" alt="HOTEL ROYAL FORT">
+        <div class="card-content">
+          <h3>HOTEL ROYAL FORT</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 3.9/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('NAKSHATRA-LR', ['wifi', 'parking', 'air_conditioning'], 'Gopala Swamy Rd, opp. Anjana Diagnostic Center, KHB Colony, Tekur Compound, Gandhi Nagar, Ballari, Karnataka 583103')">
+        <img src="images/placeholder4.png" alt="NAKSHATRA-LR">
+        <div class="card-content">
+          <h3>NAKSHATRA-LR</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 3.9/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('GRANDE IDHANTA', ['wifi', 'parking', 'pet_friendly', 'air_conditioning'], 'Dr RajKumar Rd, behind R.T.H Hotel Royal Circle, Old Katte Gudda, Cowl Bazaar, Ballari, Karnataka 583101')">
+        <img src="images/placeholder5.png" alt="GRANDE IDHANTA">
+        <div class="card-content">
+          <h3>GRANDE IDHANTA</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i> 3.5/5
+          </div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('HOTEL POLA PARADISE', ['wifi', 'pool', 'air_conditioning'], 'New Trunk Bund Road, Siddartha Nagar, Cantonment, Ballari, Karnataka 583104')">
+        <img src="images/placeholder6.png" alt="HOTEL POLA PARADISE">
+        <div class="card-content">
+          <h3>HOTEL POLA PARADISE</h3>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 3.8/5
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="hotelModal">
+    <div class="modal-content">
+      <h3 id="hotelName"></h3>
+      
+      <div class="facilities">
+        <h4>FACILITIES</h4>
+      <div id="hotelFacilities"></div>
+      </div>
+      <div class="location">
+        <h4>LOCATION</h4> <!-- Heading for Location -->
+        <p id="hotelLocation"></p> <!-- This will display the hotel's address -->
+      </div>
+      <div id="hotelAddress"></div>
+      <!-- New Reviews Section -->
+    <div class="reviews">
+      <h4>User Reviews</h4>
+      <div id="reviewsContainer"></div>
+    </div>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+  <style>
+    .reviews {
+      margin-top: 20px;
+      text-align: left;
+    }
+  
+    .reviews h4 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+  
+    .review {
+      background-color: #f1f1f1;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+  
+    .review .username {
+      font-weight: bold;
+      color: #333;
+    }
+  
+    .review .comment {
+      color: #555;
+    }
+  </style>
+
+  <script>
+    const facilityIcons = {
+      wifi: '<i class="fas fa-wifi"></i> Wi-Fi',
+      pool: '<i class="fas fa-swimming-pool"></i> Pool',
+      parking: '<i class="fas fa-parking"></i> Parking',
+      spa: '<i class="fas fa-spa"></i> Spa',
+      air_conditioning: '<i class="fas fa-wind"></i> Air Conditioning',
+      room_service: '<i class="fas fa-concierge-bell"></i> Room Service',
+      bar: '<i class="fas fa-cocktail"></i> Bar',
+      restaurant: '<i class="fas fa-utensils"></i> Restaurant',
+      pet_friendly: '<i class="fas fa-paw"></i> Pet Friendly'
+    };
+    // Hotel addresses mapping
+const hotelAddresses = {
+  'HOTEL BALA REGENCY': 'Parvathi Nagar Main Road, Ballari, Karnataka 583103',
+  'HOTEL ALLUM GOKULAM PARK': 'Beside Allum Bhavan, A.D.City, by pass of, Bellary - Uravakonda - Anantapur Rd, Ballari, Karnataka 583101',
+  'HOTEL ROYAL FORT': '5W23+9C2, New Trunk Road., Infantry Road, Housing Board Colony, Sanjay Gandhi Nagar, Ballari, Karnataka 583104',
+  'HOTEL POLA PARADISE': 'New Trunk Bund Road, Siddartha Nagar, Cantonment, Ballari, Karnataka 583104',
+  'GRANDE IDHANTA': 'Dr RajKumar Rd, behind R.T.H Hotel Royal Circle, Old Katte Gudda, Cowl Bazaar, Ballari, Karnataka 583101',
+  'NAKSHATRA-LR': 'Gopala Swamy Rd, opp. Anjana Diagnostic Center, KHB Colony, Tekur Compound, Gandhi Nagar, Ballari, Karnataka 583103'
+};
+const hotelReviews = {
+  'HOTEL BALA REGENCY': [
+    { username: 'John Doe', comment: 'Great experience, comfortable stay!' },
+    { username: 'Jane Smith', comment: 'Nice hotel, friendly staff.' },
+    { username: 'Sarah_M23', comment: 'NHad a wonderful stay at this hotel. The pool was amazing, and the food was top-notch!' },
+    { username: 'JohnDoe123', comment: 'Great place! The staff was friendly, and the rooms were very clean. Would definitely stay again!' }
+
+  ],
+  'HOTEL ALLUM GOKULAM PARK': [
+    { username: 'Michael Lee', comment: 'Excellent service and location.' },
+    { username: 'Sarah Brown', comment: 'Loved the food at the restaurant.' },
+    { username: 'TravelEnthusiast_07', comment: 'Not bad at all. The location was perfect, but the air conditioning could be a bit cooler.' },
+    { username: 'PriyaV', comment: 'Stayed here for a weekend getaway. Very peaceful environment, perfect for a short stay' }
+
+  ],
+  'HOTEL ROYAL FORT': [
+    { username: 'Chris White', comment: 'Very clean and spacious rooms.' },
+    { username: 'Emily Clark', comment: 'Highly recommend, great amenities.' },
+    { username: 'TheRealExplorer', comment: 'Excellent service! I loved the spa facilities and the cozy rooms. Highly recommend.' },
+    { username: 'Rahul_Traveller', comment: 'Good experience overall. The restaurant food was delicious, and the staff was really accommodating.' }
+  
+  ],
+  'HOTEL POLA PARADISE': [
+    { username: 'David Green', comment: 'Nice place, but the pool could be cleaner.' },
+    { username: 'Anna Wilson', comment: 'Overall, a pleasant stay.' },
+    { username: 'Neha_91', comment: 'The hotel was good, but the wifi signal was weak in some areas of the building.' },
+    { username: 'BallariLocal', comment: 'Perfect staycation! Great value for money, and I loved the modern facilities.' }
+
+  ],
+  'GRANDE IDHANTA': [
+    { username: 'Megan Johnson', comment: 'Good hotel for business trips.' },
+    { username: 'Paul Harris', comment: 'Comfortable stay and good food.' },
+    { username: 'AdventureTime', comment: 'The hotel is very close to tourist attractions, which made it super convenient for sightseeing!' },
+    { username: 'AmitG_Travels', comment: 'Had a lovely stay here. The staff was super helpful, and the cleanliness was top-notch!' },
+
+  ],
+  'NAKSHATRA-LR': [
+    { username: 'Nina Scott', comment: 'Very peaceful and clean environment.' },
+    { username: 'Ryan Walker', comment: 'Nice and cozy, enjoyed my stay.' },
+    { username: 'Sneha_Explorer', comment: 'I had an amazing time here! The ambiance was fantastic, and the staff went out of their way to make sure we were comfortable.' },
+    { username: 'Nomad_Ravi', comment: 'Stayed for a business trip. The facilities were great, but the parking area could use some improvement. Otherwise, a solid experience' }
+
+  
+  ]
+};
+
+    function openModal(name, facilities, address) {
+      document.getElementById('hotelName').innerText = name;
+      document.getElementById('hotelAddress').innerText = hotelAddresses[name] || 'Address not available';
+      
+      const facilitiesContainer = document.getElementById('hotelFacilities');
+      facilitiesContainer.innerHTML = facilities
+        .map(facility => `<span>${facilityIcons[facility] || facility}</span>`)
+        .join('');
+        const reviewsContainer = document.getElementById('reviewsContainer');
+  const reviews = hotelReviews[name] || [];
+  reviewsContainer.innerHTML = reviews
+    .map(review => `<div class="review">
+                     <div class="username">${review.username}</div>
+                     <div class="comment">${review.comment}</div>
+                   </div>`)
+    .join('');
+  
+  // Open modal
+  document.getElementById('hotelModal').style.display = 'flex';
+}
+
+    function closeModal() {
+      document.getElementById('hotelModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

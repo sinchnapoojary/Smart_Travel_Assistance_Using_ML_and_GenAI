@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Things to Do in Hospet</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    h1 {
+      color: #333;
+      margin: 20px;
+      text-align: center;
+    }
+
+       /* Navbar Styles */
+       .navbar {
+  background-color: #333;
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+  box-sizing: border-box; /* Ensure padding doesn't increase the width */
+}
+
+
+.navbar a {
+  display: block;
+  color: white;
+  text-align: left;
+  padding: 14px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #444;
+  padding-left: 0; /* Extend hover effect to the left edge */
+}
+
+.navbar a::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar .active {
+  background-color: #444;
+  padding-left: 0;
+}
+
+    .content {
+      margin-left: 240px;
+      padding: 20px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-left: 10px;
+      margin-right: 10px;
+      justify-content: start;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h3 {
+      color: #333;
+      margin: 20px;
+      font-size: 1.5em;
+    }
+
+    .card p {
+      color: #555;
+      margin: 0 20px 20px;
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    .card img {
+      width: 600px;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 800px) {
+      .navbar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-left: 0;
+      }
+
+      .content {
+        margin-left: 220px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="hospet.html">Home</a>
+    <a href="#" class="active">Things to Do</a> 
+    <a href="hospet_hotels.html">Hotel</a>
+    <a href="hospet_restaurants.html">Cafe and Chats</a>
+  </div>
+
+  <div class="content">
+    <h1>Things to Do in Hospet</h1>
+    <div class="card-container">
+      <div class="card" onclick="openHampi()">
+        <img src="https://wallpaperaccess.com/full/15210688.jpg" alt="Hampi">
+        <h3>Explore Hampi</h3>
+        <p>Discover the ancient ruins of Hampi, a UNESCO World Heritage Site.</p>
+      </div>
+      <div class="card" onclick="openTungabhadraDam()">
+        <img src="images/TBdam.jpg" alt="Tungabhadra Dam">
+        <h3>Visit Tungabhadra Dam</h3>
+        <p>Enjoy scenic views at Tungabhadra Dam.</p>
+      </div>
+      <div class="card" onclick="openAnjanadriHill()">
+        <img src="images/anjanadri.jpg" alt="Anjanadri Hill">
+        <h3>Climb Anjanadri Hill</h3>
+        <p>Take in the stunning vistas from Anjanadri Hill.</p>
+      </div>
+      <div class="card" onclick="openKishkindaPark()">
+        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/58/66/ea/kishkinda-heritage-resort.jpg?w=700&h=-1&s=1" alt="Kishkinda Resort">
+        <h3>Visit Kishkinda Resort</h3>
+        <p>Experience the joy of nature</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openHampi() {
+      window.open("hampi.html", "_blank");
+    }
+
+    function openTungabhadraDam() {
+      window.open("tungabhadra_dam.html", "_blank");
+    }
+
+    function openAnjanadriHill() {
+      window.open("anjanadri_hill.html", "_blank");
+    }
+
+    function openKishkindaPark() {
+      window.open("kishkinda.html", "_blank");
+    }
+  </script>
+
+</body>
+</html>

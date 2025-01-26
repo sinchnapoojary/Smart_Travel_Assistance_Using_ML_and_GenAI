@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ballari - Travel Planner</title>
+
+  <!-- for fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      display: flex;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100vh;  /* Full height of the viewport */
+    }
+    
+
+    .left-column {
+      width: 350px;
+      margin-left: 20px;
+      padding-left: 0;
+      overflow-y: auto; 
+    }
+
+    .right-column {
+      width: calc(100% - 320px);
+      margin-left: 20px;
+      overflow-y: auto; 
+    }
+
+    h1 {
+      font-family: 'YourPreferredFont', sans-serif; /* Change this line */
+      color: #333;
+    }
+
+    p {
+      font-family: 'YourPreferredFont', sans-serif; /* Change this line */
+      color: #333;
+      line-height: 1.6;
+    }
+
+    ul {
+      margin-top: 10px;
+    }
+
+    ul li {
+      margin: 10px 0;
+    }
+
+    .cards-container {
+      display: flex;
+      gap: 30px; /* Space between cards */
+      flex-wrap: wrap; /* Allows wrapping to the next line for smaller screens */
+      justify-content: center;
+      margin-top: 20px;
+      
+    }
+
+    .card {
+      width: 30%;
+      background-color: #333;
+      color: #f1f1f1;
+      border: 1px solid #333; /* Thin border in darker blue */
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold; /* Bold text */
+      border-radius: 70px;
+      text-decoration: none;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer; /* Pointer cursor on hover */
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background-color: #444;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .cards-container .card:last-child {
+      margin-bottom: 50px; /* Add space between the last card and the bottom of the screen */
+    }
+
+
+    .card h3 {
+      color: white;
+      font-family: 'YourPreferredFont', sans-serif; /* Change this line */
+      font-size: 18px;
+    }
+
+    .weather-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* news one */
+    .news-container {
+      margin-top: 20px;
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      max-height: 500px; /* Set a fixed height for the container */
+    }
+    .news-container h3 {
+      margin-bottom: 10px;
+      font-family: 'YourPreferredFont', sans-serif; /* Change this line */
+    }
+    .news-container ul {
+      list-style: none;
+      padding: 0;
+    }
+    .news-container ul li {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .news-container ul li a {
+      text-decoration: none;
+      color: #333;
+    }
+    .news-container ul li a:hover {
+      text-decoration: underline;
+    }
+    .news-container ul li img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+
+    .separator {
+      border-left: 2px solid #ccc;
+      height: 100%;
+      margin-left: 20px;
+    }
+
+    canvas {
+      margin-top: 20px;
+    }
+
+    #currentWeather {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    #weatherChart {
+      width: 300px;
+      height: 150px;
+    }
+
+    /* Map container */
+    #map {
+      height: 300px;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .map-card {
+      width: 100%;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .map-card h3 {
+      font-size: 18px;
+    }
+
+    .city-description {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    /* color: #333;  Optional: change text color */
+    text-align: justify;  /* Optional: to make the text justified */
+}
+
+    /* Popup overlay */
+    #mapPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      height: 90%;
+      background-color: white;
+      z-index: 1000;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #popupMap {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Define circular shape for the icon */
+.circle-icon {
+  width: 80px;                 /* Set width */
+  height: 80px;                /* Set height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;          /* Make the icon circular */
+  overflow: hidden;            /* Hide overflow to crop the image */
+  border: 5px solid white;   /* Add white border around the circle */
+  box-shadow: 0 0 15px 10px rgba(255, 255, 255, 0.8); /* Optional: Add glowing effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+}
+
+/* Ensure image inside the circle maintains its aspect ratio and fits */
+.circle-marker-img-container {
+  width: 100%;                 /* Ensure container fills the circle */
+  height: 100%;                /* Ensure container fills the circle */
+}
+
+.circle-marker-img {
+  width: 100%;                 /* Image will fill the circle */
+  height: 100%;                /* Image will fill the circle */
+  border-radius: 50%;          /* This makes the image circular */
+  object-fit: cover;           /* Ensure image is properly centered and cropped */
+}
+/* Hover effect */
+.circle-icon:hover {
+  transform: scale(1.2) translateY(-10px); /* Enlarge and move upward */
+  box-shadow: 0 0 20px 15px rgba(72, 152, 72, 0.9); /* Change glow color and intensity */
+}
+
+    #mapOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .map-message {
+      position: relative;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      z-index: 999;
+      display: block;
+      display: block; /* Initially visible */
+    }
+    .home-button {
+            position: absolute;
+            top: 6px;
+            left: 20px;
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .home-button:hover {
+            background-color: #444;
+        }
+    /* Button style */
+#showEmergencyServicesBtn {
+  position: fixed;  /* Fixed positioning */
+  top: 20px;        /* Distance from the top */
+  right: 20px;      /* Distance from the right */
+  background-color: #d61d1d;  /* Green color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  z-index: 1000;  /* Ensure button is on top */
+}
+
+#showEmergencyServicesBtn:hover {
+  background-color: #a01414;
+}
+  /* Button style */
+#showEmergencyServicesBtn {
+  background-color: #d61d1d;  /* Green color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+#showEmergencyServicesBtn:hover {
+  background-color: #a01414;
+}
+
+/* Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1001; /* Ensure modal is on top of the map */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 1000px;
+  border-radius: 10px;
+  z-index: 1002; /* Modal content should be on top */
+  overflow: auto;
+}
+
+/* Close button (X) */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal content */
+#emergencyServicesDetails {
+  padding-top: 4px;
+}
+
+  /* Two-column grid layout for the modal */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Each column container */
+.contact-column {
+  padding: 10px;
+}
+
+/* Service container style */
+.service-container {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Service item style (flex layout for image and text) */
+.service-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.service-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Phone and Email Icons */
+.service-text p {
+  display: flex;
+  align-items: center;
+}
+
+.service-text p strong {
+  margin-right: 5px;
+}
+
+.service-text p svg {
+  margin-left: 5px;
+}
+
+/* Title for each section */
+h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+h4 {
+  margin: 0;
+  color: #333;
+}
+
+/* Responsive styling for small screens */
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <a href="home.html">
+    <button class="home-button">HOME</button>
+</a>
+  <div class="container">
+    <div class="left-column">
+      <div class="weather-container">
+        <div id="currentWeather" style="display: none;">
+          <h3>Current Weather in Ballari</h3>
+          <p id="weatherDetails"></p>
+        </div>
+        <div id="weatherSection" style="display: none;">
+          <h3>Weather Forecast</h3>
+          <canvas id="weatherChart" width="300" height="150"></canvas>
+        </div>
+      </div>
+      <!-- Travel Recommendations Section -->
+<div class="news-container">
+  <h3>Explore Karnataka - Travel Recommendations</h3>
+  <ul id="recommendationList"></ul>
+</div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="right-column">
+      <h1>Welcome to Ballari</h1>
+      
+      <!-- Map Section -->
+      <div id="map"></div>
+      <div id="mapMessage" class="map-message">
+        Click the map to EXPLORE!
+      </div>
+      <!-- Emergency Services Button -->
+<button id="showEmergencyServicesBtn" class="btn btn-primary">Emergency Assistance</button>
+
+<!-- Popup Modal -->
+<div id="emergencyModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeEmergencyModal()">&times;</span>
+    <h2>Emergency and Local Contacts</h2>
+
+    <div class="contact-grid">
+      <!-- Emergency Contacts Section -->
+      <div class="contact-column" id="emergencyContacts">
+        <h3>Emergency Contacts</h3>
+        <div id="emergencyServicesDetails"></div>  <!-- Emergency Services Content -->
+      </div>
+
+      <!-- Local Contacts Section -->
+      <div class="contact-column" id="localContacts">
+        <h3>Local Contacts</h3>
+        <div id="localServicesDetails"></div> <!-- Local Services Content -->
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+      <!-- city description -->
+      </style>    
+      <p><strong>About</strong><br>  
+        Ballari, a vibrant city in the heart of Karnataka, India, is a perfect blend of rich history, culture, and modern development. Known for its historical monuments, such as the Ballari Fort, the city offers a glimpse into the past with its ancient architecture and scenic landscapes. Surrounded by natural beauty, including picturesque hills, lakes, and wildlife sanctuaries, Ballari provides numerous opportunities for outdoor activities like trekking and nature walks. The city is also famous for its temples, such as the Sri Siddi Vinayaka Temple, and is a gateway for travelers visiting the nearby historic destinations of Hospet and Hampi, both UNESCO World Heritage Sites. Ballari’s warm, welcoming atmosphere, along with its growing infrastructure, makes it an ideal destination for history buffs, nature lovers, and anyone seeking a peaceful escape from the hustle and bustle of city life.
+      </p>
+      <p><strong>Historical Significance</strong><br>
+        Ballari is a city rich in history, with strong ties to the <strong>Vijayanagara Empire</strong>, one of the most powerful and prosperous empires of the 14th to 16th centuries. The city's most prominent historical site is the <strong>Ballari Fort</strong>, which dates back to the Vijayanagara period. The fort, perched atop a hill, offers a panoramic view of the city and its surroundings. In addition, the region is dotted with temples, including <strong>Virupaksha Temple</strong> and <strong>Bhoga Nandeeshwara Temple</strong>, which reflect the architectural grandeur and spiritual importance of the area.</p>
+        
+        <p><strong>Culture and Cuisine</strong><br>
+        Ballari has a vibrant cultural heritage, with festivals like <strong>Ugadi</strong>, <strong>Dussehra</strong>, and <strong>Diwali</strong> being celebrated with much fervor. The local folk music and dance performances, including <strong>Yakshagana</strong>, offer a glimpse into the region's cultural richness. When it comes to food, Ballari offers a variety of local delicacies such as:</p>
+        <ul>
+          <li><strong>Bisi Bele Bath</strong>: A spicy rice and lentil dish.</li>
+          <li><strong>Ragi Mudde</strong>: A nutritious dish made from finger millet, often served with sambar and curry.</li>
+          <li><strong>Mysore Pak</strong>: A traditional sweet that originated in the region.</li>
+        </ul>
+        <p>These dishes are a must-try for anyone looking to explore the authentic flavors of Karnataka.</p>
+        
+        <p><strong>Accessibility</strong><br>
+        Ballari is well-connected to major cities and regions in Karnataka and beyond. The <strong>Ballari Junction</strong> railway station is an important railway hub, linking the city to Bangalore, Hyderabad, and other major cities in South India. The city is also accessible by road via National Highways and state highways. The <strong>Vidyanagar Airport</strong>, located around 35 km from the city, serves both domestic and limited international flights, making it convenient for air travelers.</p>
+        
+        <p><strong>Nearby Destinations</strong><br>
+        Ballari’s strategic location makes it an excellent base for exploring nearby attractions:
+        <ul>
+          <li><strong>Hampi</strong> (approximately 60 km from Ballari): A UNESCO World Heritage Site, known for its ancient ruins, temples, and breathtaking landscapes.</li>
+          <li><strong>Hospet</strong> (around 35 km): A historic town near Hampi, famous for its temples and the Tungabhadra Dam.</li>
+          <li><strong>Tungabhadra Dam</strong> (around 40 km): A scenic spot that offers a peaceful retreat, with a reservoir ideal for boating and picnics.</li>
+        </ul>
+        These nearby destinations enhance Ballari’s appeal as a travel hub for those interested in history, culture, and natural beauty.</p>
+
+      <div class="cards-container">
+        <a href="ballari_hotels.html" class="card">
+          <h3>Explore Hotels in Ballari</h3>
+        </a>
+        <a href="ballari_restaurants.html" class="card">
+          <h3>Explore Cafe and Chats</h3>
+        </a>
+        <a href="ballari_things_to_do.html" class="card">
+          <h3>Explore Things to Do in Ballari</h3>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map Popup -->
+  <div id="mapOverlay" onclick="closeMapPopup()"></div>
+  <div id="mapPopup">
+    <!-- Interactive Map in the Popup -->
+    <div id="popupMap" style="width: 100%; height: 100%"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+
+  <script>
+    const apiKey = "795060565c529b1d7340755ac6985115";
+
+    // Fetch Weather Data
+    async function fetchWeather() {
+      try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=ballari&units=metric&appid=${apiKey}`);
+        if (!response.ok) throw new Error("City not found.");
+        const weatherData = await response.json();
+
+        document.getElementById("currentWeather").style.display = "block";
+        document.getElementById("weatherSection").style.display = "block";
+
+        displayCurrentWeather(weatherData);
+        generateWeatherGraph(weatherData);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    function displayCurrentWeather(weatherData) {
+      const currentWeather = weatherData.list[0];
+      const currentTemp = currentWeather.main.temp;
+      const weatherDesc = currentWeather.weather[0].description;
+      const humidity = currentWeather.main.humidity;
+
+      document.getElementById("weatherDetails").innerHTML = ` 
+        Temperature: ${currentTemp}°C <br> 
+        Description: ${weatherDesc} <br> 
+        Humidity: ${humidity}% 
+      `;
+    }
+
+    function generateWeatherGraph(weatherData) {
+      const ctx = document.getElementById("weatherChart").getContext("2d");
+
+      const hours = weatherData.list.slice(0, 3).map((entry) => {
+        const date = new Date(entry.dt * 1000);
+        return `${date.getHours()}:${("0" + date.getMinutes()).slice(-2)}`;
+      });
+
+      const temps = weatherData.list.slice(0, 3).map((entry) => entry.main.temp);
+
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: hours,
+          datasets: [
+            {
+              label: "Temperature (°C)",
+              data: temps,
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              borderWidth: 2,
+              tension: 0.2,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+        },
+      });
+    }
+    fetchWeather();
+    // Curated list of travel destinations in Karnataka with updated titles, descriptions, and image placeholders
+const travelDestinations = [
+    {
+        title: "Coorg - click for more info",
+        description: "Known for its coffee plantations, lush greenery, and beautiful landscapes, Coorg is perfect for nature lovers and adventure seekers.",
+        url: "https://en.wikipedia.org/wiki/Coorg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiORKlG2Hjk1jR1Joum0rnEpjXXjTeKQKZZQ&s"
+    },
+    {
+        title: "Mysore - click for more info",
+        description: "Visit the grand Mysore Palace and explore the cultural heritage and vibrant markets of Mysore.",
+        url: "https://en.wikipedia.org/wiki/Mysore",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt-fnPI4tfg5u2KWS1SpbJLyJ8gtXCYozGgQ&s"
+    },
+    {
+        title: "Chikmagalur - click for more info",
+        description: "Known for its coffee plantations and scenic hills, Chikmagalur is an ideal getaway for trekkers and nature lovers.",
+        url: "https://en.wikipedia.org/wiki/Chikmagalur",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq8s1i5KJfUP7ooa78NrUSg1iHC0jjn2glnw&s"
+    },
+    {
+        title: "Gokarna - click for more info",
+        description: "A serene coastal town famous for its pristine beaches and ancient temples, perfect for a peaceful retreat.",
+        url: "https://en.wikipedia.org/wiki/Gokarna",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyzcpA7y61_gcuyN3FEXJLzLGPWWfcerR1Iw&s"
+    },
+    {
+        title: "Badami - click for more info",
+        description: "Explore the ancient rock-cut temples and beautiful archaeological sites in Badami, the former capital of the Chalukya dynasty.",
+        url: "https://en.wikipedia.org/wiki/Badami",
+        image: "https://static.wixstatic.com/media/081c8c_159f21e384b64cc88daa44ecc8392f00~mv2.jpeg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/081c8c_159f21e384b64cc88daa44ecc8392f00~mv2.jpeg"
+    },
+    {
+        title: "Bidar - click for more info",
+        description: "Bidar is a city of Bidar district in Karnataka state of India. Bidar is a prominent place on the archaeological map of India, it is well known for architectural, historical religious and rich heritage sites.",
+        url: "https://en.wikipedia.org/wiki/Bidar",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGy3e0CGWO9-yaShick1aLXQIZnJrci1FYXA&s"
+    }
+];
+
+function displayTravelRecommendations(destinations) {
+    const recommendationList = document.getElementById("recommendationList");
+    recommendationList.innerHTML = ""; // Clear existing content
+
+    if (destinations.length === 0) {
+        recommendationList.innerHTML = "<li>No travel destinations available.</li>";
+        return;
+    }
+
+    destinations.forEach(destination => {
+        const recommendationItem = document.createElement("li");
+        recommendationItem.innerHTML = `
+            <a href="${destination.url}" target="_blank">
+                <strong>${destination.title}</strong>
+            </a>
+            <p>${destination.description}</p>
+            ${destination.image ? `<img src="${destination.image}" alt="${destination.title}" style="max-width:100%; margin-top:10px; border-radius:5px;" />` : ""}
+        `;
+        recommendationList.appendChild(recommendationItem);
+    });
+}
+
+// Call the function to load travel recommendations
+displayTravelRecommendations(travelDestinations);
+
+
+
+    // Initialize Leaflet Map (main page)
+    const map = L.map('map', {
+      dragging: false,       // Disable dragging
+      zoomControl: false,    // Disable zoom control
+      scrollWheelZoom: false, // Disable scroll zoom
+      touchZoom: false,      // Disable touch zoom
+      doubleClickZoom: false, // Disable double click zoom
+      boxZoom: false,        // Disable box zoom
+      keyboard: false,       // Disable keyboard controls
+      tap: false,            // Disable tap
+      contextmenu: false     // Disable right-click context menu
+    }).setView([15.1500, 76.9000], 10); // Ballari coordinates
+    // Disable interactivity on the main map
+    // map.dragging.disable();
+    // map.scrollWheelZoom.disable();
+    // map.touchZoom.disable();
+    // map.doubleClickZoom.disable();
+    // map.boxZoom.disable();
+    // map.keyboard.disable();
+    const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; <a href="https://www.esri.com/">Esri</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    // Add street view by default
+    streetLayer.addTo(map);
+
+    let popupMap; 
+
+    
+
+    // Popup map setup
+    function openMapPopup() {
+      // document.getElementById("mapMessage").style.display = "none";
+      document.getElementById("mapOverlay").style.display = "block";
+      document.getElementById("mapPopup").style.display = "block";
+      if (!popupMap) {
+       popupMap = L.map('popupMap').setView([15.1500, 76.9000], 10); // Same coordinates
+      const streetLayerPopup = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      });
+      streetLayerPopup.addTo(popupMap);
+
+      L.control.layers({
+        "Street View": streetLayerPopup,
+        "Satellite View": satelliteLayer
+      }).addTo(popupMap);
+    }
+
+  // Array of tourist spots in Ballari
+  const touristSpots = [
+    {
+      name: "Ballari Fort",
+      description: "The Bellary Fort (\"Bellary Kote\") was built on top of a hill called the \"Ballari Gudda\" or the Fort Hill. It is situated in the historic city of Bellary, in the Bellary district, in Karnataka state, India.",
+      lat: 15.145524970214348, // Latitude of Ballari Fort
+      lon: 76.91449382883522, // Longitude of Ballari Fort
+      image: "https://lh5.googleusercontent.com/p/AF1QipOC8OSnqjha7SLRelV8wYWk4BHJT3fqHbbbRKeO=w408-h306-k-no" // Image URL of Ballari Fort
+    },
+    {
+      name: "Kumaraswamy Temple",
+      description: "Hindu temple with an ornate facade constructed between the 8th & 10 centuries.",
+      lat: 15.154031216201243, // Latitude of Kumaraswamy Temple
+      lon: 76.9133594711648, // Longitude of Kumaraswamy Temple
+      image: "https://lh5.googleusercontent.com/p/AF1QipNuQvlm8JHOae_OtG1MA0j1hRCUVl6EK8HEAwD-=w427-h240-k-no" // Image URL of Kumaraswamy Temple
+    },
+    {
+      name: "Daroji Sloth Bear Sanctuary",
+      description: "Set atop a forest, this sprawling sanctuary provides public tours & up-close views of sloth bears.",
+      lat: 15.272643983745015, // Latitude of Daroji Sloth Bear Sanctuary
+      lon: 76.48411503659777, // Longitude of Daroji Sloth Bear Sanctuary
+      image: "https://lh5.googleusercontent.com/p/AF1QipNUX8_vpWHtwr3dcEB76l_8YTycU8e2s0-mm_x1=w408-h306-k-no" // Image URL of Daroji Sloth Bear Sanctuary
+    },
+    {
+      name: "Bhaagya Amusement Park",
+      description: "Experience amusement at different levels.",
+      lat: 15.203113739044946, // Latitude of Bhaagya Amusement Park
+      lon: 77.01039933659625, // Longitude of Bhaagya Amusement Park
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj3MJCFgeTV4NtpeT7jSvZO2Ud8LT3q03NIA&s" // Image URL of Bhaagya Amusement Park
+    }
+  ];
+
+  // Loop through the array and add custom markers
+  touristSpots.forEach(spot => {
+    /// Create custom marker icon with circular styling using L.divIcon
+const customIcon = L.divIcon({
+  className: 'circle-icon',    // Add a custom class to apply styles
+  html: `<img src="${spot.image}" class="circle-marker-img" />`,  // Use an <img> tag for the marker image
+  iconSize: [80, 80],          // Size of the icon (circle)
+  iconAnchor: [40, 80],        // Anchor the icon at the bottom
+  popupAnchor: [0, -80]        // Adjust the popup position
+});
+
+
+
+//    // Create marker with custom icon
+// const markerMain = L.marker([spot.lat, spot.lon], { icon: customIcon }).addTo(map); // Add marker to main map
+
+// Create marker for popup map and attach popup content
+const markerPopup = L.marker([spot.lat, spot.lon], { icon: customIcon }).addTo(popupMap);
+
+
+    
+
+    // Create the popup content (with name, description, and image)
+    const popupContent = `
+      <div style="text-align:center;">
+        <h3>${spot.name}</h3>
+        <img src="${spot.image}" alt="${spot.name}" style="width:100px;height:auto;"/>
+        <p>${spot.description}</p>
+      </div>
+    `;
+
+    // Bind the popup to the marker
+    markerPopup.bindPopup(popupContent);
+  
+  });
+}
+
+    function closeMapPopup() {
+      document.getElementById("mapOverlay").style.display = "none";
+      document.getElementById("mapPopup").style.display = "none";
+    }
+
+    // Open popup on map click
+    document.getElementById("map").onclick = openMapPopup;
+    // map.on('click', openMapPopup);
+
+    // Sample emergency services data
+    const emergencyServices = [
+  {
+    name: "POLICE",
+    contact: "112",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "FIRE",
+    contact: "101",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "AMBULANCE",
+    contact: "108",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "CHILD HELPLINE",
+    contact: "1098",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "WOMEN HELPLINE",
+    contact: "1091",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "SENIOR CITIZENS HELPLINE",
+    contact: "1090",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "NATIONAL HIGHWAYS HELPLINE",
+    contact: "1033",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "RAILWAY SECURITY HELPLINE",
+    contact: "1322",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "LOKAYUKTA HELPLINE",
+    contact: "08022342100",
+    icon: "📞",  // Phone symbol
+  },
+  {
+    name: "CYBER CRIME HELPLINE",
+    contact: "1930",
+    icon: "📞",  // Phone symbol
+  }
+];
+
+const localContacts = [
+  {
+    name: "DISTRICT CONTROL ROOM",
+    phone: "08392-258100,-258102(FAX)",
+    // email: "cpiruralblr@ksp.gov.in",
+    phoneIcon: "📞",  // Phone symbol
+    // emailIcon: "📧",  // Mail symbol
+  },
+  {
+    name: "PI BALLARI TRAFFIC POLICE STATION",
+    phone: "+91839227522",
+    // email: "ballaritrafficblr@ksp.gov.in",
+    phoneIcon: "📞",  // Phone symbol
+    // emailIcon: "📧",  // Mail symbol
+  },
+  {
+    name: "BALLARI DISTRICT HOSPITAL",
+    phone: "08392-275255",
+    phoneIcon: "📞",  // Phone symbol
+  },
+  {
+    name: "BALLARI FIRE STATION",
+    phone: "08392266001",
+    phoneIcon: "📞",  // Phone symbol
+  }
+];
+
+
+function showEmergencyModal() {
+  const modal = document.getElementById("emergencyModal");
+  
+  const emergencyServicesContainer = document.getElementById("emergencyServicesDetails");
+  const localServicesContainer = document.getElementById("localServicesDetails");
+
+  // Clear previous details
+  emergencyServicesContainer.innerHTML = "";
+  localServicesContainer.innerHTML = "";
+
+  // Insert Emergency Services into the first column
+  emergencyServices.forEach(service => {
+    const serviceElement = document.createElement("div");
+    serviceElement.classList.add("service-container");
+
+    serviceElement.innerHTML = `
+      <div class="service-item">
+        <div class="service-text">
+          <h4>${service.name}</h4>
+          <p><strong></strong> ${service.icon} ${service.contact}</p>
+        </div>
+      </div>
+    `;
+    
+    emergencyServicesContainer.appendChild(serviceElement);
+  });
+
+  // Insert Local Contacts into the second column
+  localContacts.forEach(service => {
+    const serviceElement = document.createElement("div");
+    serviceElement.classList.add("service-container");
+
+    serviceElement.innerHTML = `
+      <div class="service-item">
+        <div class="service-text">
+          <h4>${service.name}</h4>
+          <p><strong></strong> ${service.phoneIcon} ${service.phone}</p>
+          ${service.email ? `<p><strong></strong> ${service.emailIcon} ${service.email}</p>` : ""}
+        </div>
+      </div>
+    `;
+    
+    localServicesContainer.appendChild(serviceElement);
+  });
+
+  // Display the modal
+  modal.style.display = "block";
+}
+
+
+// Function to close the emergency services modal
+function closeEmergencyModal() {
+  const modal = document.getElementById("emergencyModal");
+  modal.style.display = "none";
+}
+
+// When the user clicks the button, open the modal
+document.getElementById("showEmergencyServicesBtn").onclick = showEmergencyModal;
+
+// When the user clicks anywhere outside the modal, close it
+window.onclick = function(event) {
+  const modal = document.getElementById("emergencyModal");
+  if (event.target == modal) {
+    closeEmergencyModal();
+  }
+}
+
+
+  </script>
+  
+</body>
+</html>

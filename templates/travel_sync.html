@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelSync</title>
+  <style>
+    /* Fullscreen bootup screen */
+    #bootup-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; /* To stack the content vertically */
+      z-index: 9999;
+    }
+
+    /* Welcome message */
+    #welcome-message {
+      font-family: Arial, sans-serif;
+      font-size: 2vw; /* Adjust font size to fit well */
+      color: #333;
+      margin-bottom: 20px; /* Space between welcome message and title */
+      opacity: 0; /* Initially hidden */
+      animation: fadeIn 1s forwards 0.5s; /* Fade in after a slight delay */
+      font-weight: bold; /* Make the welcome message bold */
+    }
+
+    /* Tagline */
+    #tagline {
+      font-family: Arial, sans-serif;
+      font-size: 1.5vw; /* Adjust font size to fit well */
+      color: #333;
+      margin-top: 20px; /* Space between title and tagline */
+      opacity: 0; /* Initially hidden */
+      animation: fadeIn 1s forwards 2.5s; /* Fade in after the typing animation */
+      font-weight: bold; /* Make the tagline bold */
+    }
+
+    /* Typing animation effect for project name */
+    #project-name {
+      font-family: Arial, sans-serif;
+      font-size: 10vw;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 0.15em solid #333;
+      animation: typing 2.5s steps(9) 0s forwards, blink-caret 0.75s step-end infinite;
+      font-weight: bold; /* Keep title bold */
+    }
+
+    /* Typing animation */
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 9ch; /* Adjust for the number of characters in "TravelSync" */
+      }
+    }
+
+    /* Blinking caret effect */
+    @keyframes blink-caret {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    /* Fade in animation for welcome message and tagline */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bootup Screen -->
+  <div id="bootup-screen">
+    <!-- Welcome message -->
+    <div id="welcome-message">Welcome to</div>
+
+    <!-- Typing animation for the project name -->
+    <h1 id="project-name">TravelSync</h1>
+
+    <!-- Tagline -->
+    <div id="tagline">YOUR TRAVEL BUD</div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      // Set a timeout to hide the bootup screen after 3.5 seconds (time of animation)
+      setTimeout(function () {
+        // Redirect to your home page after animation is complete (e.g., 'home.html' is your homepage)
+        window.location.href = 'home.html'; // Change 'home.html' to your actual homepage URL or file path
+      }, 4000); // 3500ms (3.5 seconds) to match the animation duration
+    };
+  </script>
+
+</body>
+</html>

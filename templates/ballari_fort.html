@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    // Prevent caching of the page
+    if (window.location.pathname === "/ballari_fort") {
+      fetch(window.location.href, { cache: 'no-store' })
+        .then(response => response.text())
+        .then(text => {
+          document.open();
+          document.write(text);
+          document.close();
+        });
+    }  
+
+    // Function to update the crowd status based on time
+    function updateCrowdStatus() {
+      const hour = new Date().getHours();
+      const statusElement = document.getElementById('status');
+
+      if (hour >= 9 && hour < 17) {  // During working hours (9 AM - 5 PM)
+        statusElement.innerText = "Currently Closed";
+        document.getElementById('result').style.display = 'none'; // Hide result during closed hours
+      } else {  // During non-working hours
+        statusElement.innerText = "Predicting crowd levels...";
+        // Call the backend API to fetch the prediction
+        fetch('/predict_crowd', { method: 'GET' })
+          .then(response => response.json())
+          .then(data => {
+            // Hide the status message and display the result
+            statusElement.style.display = 'none';
+
+            if (data.error) {
+              statusElement.textContent = "Unable to fetch prediction data. Please try again later.";
+              statusElement.style.display = 'block';
+              return;
+            }
+
+            // Update the result with the crowd percentage and message
+            document.getElementById('predicted-crowd').textContent = data.predicted_crowd;
+            document.getElementById('message').textContent = data.message;
+            document.getElementById('result').style.display = 'block';
+          })
+          .catch(error => {
+            // Handle any errors
+            console.error("Error fetching prediction:", error);
+            statusElement.textContent = "Error predicting crowd levels. Please try again later.";
+          });
+      }
+    }
+
+    // Call the function to update the crowd status on page load
+    updateCrowdStatus();
+
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ballari Fort</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      padding-top: 20px;
+      font-size: 2.5em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    img {
+      width: 100%; /* Makes the image fill the full width of the page */
+      height: auto; /* Maintains the aspect ratio */
+      margin: 0; /* Removes any default margin */
+      padding: 0; /* Removes any default padding */
+    }
+
+    #status {
+      font-size: 1.2em;
+      color: #555;
+      margin-top: 20px;
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+
+    #result {
+      display: none;
+      margin-top: 30px;
+      font-size: 1.1em;
+      color: #333;
+      text-align: center;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: all 0.3s ease-in-out;
+    }
+
+    #predicted-crowd {
+      font-size: 2em;
+      color: #333;
+      font-weight: bold;
+    }
+
+    #message {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* Animation for fade-in effect */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Additional smooth transition for the result section */
+    #result.show {
+      display: block;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    /* Slide-up effect for result */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+    }
+
+    .details {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .details h2 {
+      color: #333;
+      font-size: 1.3em;
+    }
+    .details p {
+      margin: 10px 0;
+    }
+    #reviews ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+  </style>
+</head>
+<body>
+  
+  
+  
+  <h1>Welcome to Ballari Fort</h1>
+  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhm3qgSs3Nw2yl-cc-Z-tqyC2OTKDykcNZduooOGrXBad2PEJOEgjvOlozkWW5OojSw71zhN84RWDuR5JxeKCEh_jKTPSzJqfnrRnx1T5MBPaACgdhm1syVn5rhvKRd4W9NsbPGn53mBw8/s1600/07+Bellary+fort.jpg" alt="Ballari Fort">
+  <p>Explore the historic Ballari Fort!</p>
+  <p id="status">Predicting crowd levels...</p>
+  
+    <span id="message"></span>
+  <p id="result">
+    <strong>Predicted Crowd Level:</strong> <span id="predicted-crowd"></span>% <br>
+    </p>
+  
+
+<!-- Greeting Message Element
+<div id="greetingMessage" style="font-size: 1.5em; color: #333; margin-top: 20px;"></div>
+
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhm3qgSs3Nw2yl-cc-Z-tqyC2OTKDykcNZduooOGrXBad2PEJOEgjvOlozkWW5OojSw71zhN84RWDuR5JxeKCEh_jKTPSzJqfnrRnx1T5MBPaACgdhm1syVn5rhvKRd4W9NsbPGn53mBw8/s1600/07+Bellary+fort.jpg" alt="Ballari Fort">
+
+<p>Explore the historic Ballari Fort!</p>
+
+<p id="status">Predicting crowd levels...</p>
+
+<span id="message"></span>
+
+<p id="result">
+  <strong>Predicted Crowd Level:</strong> <span id="predicted-crowd"></span>% <br>
+</p> -->
+
+
+
+  
+  <script>
+    // Call the backend API to fetch the prediction
+    fetch('/predict_crowd', { method: 'GET' })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the status message and display the result
+        document.getElementById('status').style.display = 'none';
+
+        if (data.error) {
+          document.getElementById('status').textContent = 
+            "Unable to fetch prediction data. Please try again later.";
+          document.getElementById('status').style.display = 'block';
+          return;
+        }
+
+        // Update the result with the crowd percentage and message
+        document.getElementById('predicted-crowd').textContent = data.predicted_crowd;
+        document.getElementById('message').textContent = data.message;
+        document.getElementById('result').style.display = 'block';
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error("Error fetching prediction:", error);
+        document.getElementById('status').textContent = 
+          "Error predicting crowd levels. Please try again later.";
+      });
+  </script>
+
+  <!-- Details Section -->
+  <div class="details">
+    <h2>Description:</h2>
+    <p>Ballari Fort, situated on top of a monolithic hill in Ballari, Karnataka, is a historic fort with remarkable architecture and a rich past. Built during the Vijayanagara Empire and later modified by Hyder Ali in the 18th century, the fort is divided into two parts—the Upper Fort and the Lower Fort. The Upper Fort offers breathtaking views of the surrounding landscape and features impressive defensive structures, while the Lower Fort houses several administrative buildings and temples.</p>
+
+    <h2>Address:</h2>
+    <p>Fort Road, Ballari, Karnataka 583101</p>
+
+    <h2>Established:</h2>
+    <p>16th Century (expanded in the 18th century by Hyder Ali)</p>
+
+    <h2>Hours:</h2>
+    <p>6 AM - 6 PM</p>
+
+    <h2>Best visit Timings</h2>
+    <p>Early morning (6 AM - 8 AM) or late afternoon (4 PM - 6 PM) for pleasant weather and stunning views of the sunrise or sunset.</p>
+   
+    <h2>Reviews:</h2>
+<div id="reviews">
+  <ul>
+    <li>
+      <strong>Ramesh K.:</strong> "A must-visit for history enthusiasts! The views from the Upper Fort are breathtaking."
+    </li>
+    <li>
+      <strong>Anita S.:</strong> "The architecture is simply stunning. A perfect spot for photography lovers."
+    </li>
+    <li>
+      <strong>Vikram P.:</strong> "The sunset view from the top was mesmerizing. Definitely worth the climb!"
+    </li>
+    <li>
+      <strong>Sonia M.:</strong> "The walk to the Upper Fort can be tiring, but the rich history and panoramic views are rewarding."
+    </li>
+  </ul>
+</div>
+
+  
+  </div>
+
+
+  <script>
+    // Redirect to the server path if not already on it
+    if (window.location.pathname !== "http://127.0.0.1:5001") {
+      window.location.href = "http://127.0.0.1:5001";
+    }
+  </script>
+  
+</body>
+</html>

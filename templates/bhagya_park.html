@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhagya Amusement Park</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      padding-top: 20px;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+    #result {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 15px;
+    }
+    #status {
+      font-size: 1em;
+      color: #888;
+      margin-top: 10px;
+    }
+    .details {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .details h2 {
+      color: #333;
+      font-size: 1.3em;
+    }
+    .details p {
+      margin: 10px 0;
+    }
+    .reviews {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .reviews h2 {
+      color: #333;
+      font-size: 1.3em;
+    }
+    .review {
+      margin-bottom: 15px;
+    }
+    .review strong {
+      display: block;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Bhagya Amusement Park</h1>
+  <img src="https://pbs.twimg.com/media/FT7JwTbaMAARaVv.jpg" alt="Bhagya">
+  <p>Enjoy the rides at Bhagya Amusement Park</p>
+
+  <div class="details">
+    <h2>Description:</h2>
+    <p>Bhaagya Amusement Park in Bellary is a top player in the category Amusement Parks in Bellary. This well-known establishment acts as a one-stop destination servicing customers both local and from other parts of Bellary. Over the course of its journey, this business has established a firm foothold in its industry. The belief that customer satisfaction is as important as their products and services has helped this establishment garner a vast base of customers, which continues to grow by the day. This business employs individuals dedicated to their respective roles, putting in a lot of effort to achieve the common vision and larger goals of the company. In the near future, this business aims to expand its line of products and services to cater to a larger client base.</p>
+
+    <h2>Address:</h2>
+    <p>SH 132, Shivapuram, Karnataka 583117</p>
+
+    <h2>Phone:</h2>
+    <p>098801 46568</p>
+
+    <h2>Hours:</h2>
+    <p>11 AM - 6 PM</p>
+
+    <h2>Best Visiting Timings</h2>
+    <p>Afternoon (12 PM - 4 PM) for rides and water park activities</p>
+  </div>
+
+  <div class="reviews">
+    <h2>Reviews:</h2>
+    <div class="review">
+      <strong>Ramesh Kumar:</strong>
+      "A fantastic place for a weekend getaway with family! The rides are thrilling, and the staff is very friendly. Definitely worth visiting again."
+    </div>
+    <div class="review">
+      <strong>Anjali Verma:</strong>
+      "We had a great time! The cleanliness and safety measures were impressive. My kids enjoyed every bit of it. Highly recommend for families."
+    </div>
+    <div class="review">
+      <strong>Deepak Sharma:</strong>
+      "Good experience overall, but some of the rides had long queues. It would be better if they had a fast-track option."
+    </div>
+    <div class="review">
+      <strong>Priya Singh:</strong>
+      "Beautiful park with a lot of fun activities. Food options could be improved, but the ambiance and rides were amazing."
+    </div>
+    <div class="review">
+      <strong>Vikram Patel:</strong>
+      "An exciting day full of fun and adventure! The water rides were the best part. A must-visit for thrill-seekers."
+    </div>
+  </div>
+
+  <p id="result" style="display: none;">
+    <strong>Predicted Crowd Level:</strong> <span id="predicted-crowd"></span>% <br>
+    <span id="message"></span>
+  </p>
+
+  <script>
+    // Call the backend API to fetch the prediction
+    fetch('/predict_crowd', { method: 'GET' })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('status').style.display = 'none';
+
+        if (data.error) {
+          document.getElementById('status').textContent = 
+            "Unable to fetch prediction data. Please try again later.";
+          document.getElementById('status').style.display = 'block';
+          return;
+        }
+
+        document.getElementById('predicted-crowd').textContent = data.predicted_crowd;
+        document.getElementById('message').textContent = data.message;
+        document.getElementById('result').style.display = 'block';
+      })
+      .catch(error => {
+        console.error("Error fetching prediction:", error);
+        document.getElementById('status').textContent = 
+          "Error predicting crowd levels. Please try again later.";
+      });
+  </script>
+</body>
+</html>

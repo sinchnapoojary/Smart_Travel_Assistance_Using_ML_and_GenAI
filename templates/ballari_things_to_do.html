@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Things to Do in Ballari</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    h1 {
+      color: #333;
+      margin: 20px;
+      text-align: center;
+    }
+
+    .navbar {
+      background-color: #333;
+      width: 200px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 20px;
+      box-sizing: border-box;
+    }
+
+    .navbar a {
+  display: block;
+  color: white;
+  text-align: left; /* Change to left alignment */
+  padding: 14px 20px; /* Adjust padding if needed */
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #444;
+  padding-left: 0; /* Extend hover effect to the left edge */
+}
+
+.navbar .active {
+  background-color: #444;
+  padding-left: 0; /* Keep active state consistent */
+}
+
+
+    .content {
+      margin-left: 240px;
+      padding: 20px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Two columns */
+      gap: 20px; /* Space between cards */
+      margin-left: 10px; /* Push content to the right */
+      margin-right: 10px; /* Adjust spacing from the right edge */
+      justify-content: start; /* Align items within the grid */
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h3 {
+      color: #333;
+      margin: 20px;
+      font-size: 1.5em;
+    }
+
+    .card p {
+      color: #555;
+      margin: 0 20px 20px;
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    .card img {
+      width: 600px;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 800px) {
+      .navbar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-left: 0;
+      }
+
+      .content {
+        margin-left: 220px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="ballari.html">Home</a>
+    <a href="#" class="active">Things to Do</a> 
+    <a href="ballari_hotels.html">Hotel</a>
+    <a href="ballari_restaurants.html">Cafe and Chats</a>
+  </div>
+
+  <div class="content">
+    <h1>Things to Do in Ballari</h1>
+    <div class="card-container">
+      <div class="card" onclick="openBallariFort()">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.oMzoDGGwB77deLBNYbkveQHaE8&pid=Api&P=0&h=180" alt="Bellary Fort">
+        <h3>Visit Bellary Fort</h3>
+        <p>Explore the historic Bellary Fort.</p>
+      </div>
+      <div class="card" onclick="openKumaraswamyTemple()">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.y1G5jTquIxtN2lgARh3yJgHaFj&pid=Api&P=0&h=180" alt="Kumaraswamy Temple">
+        <h3>Visit Kumaraswamy Temple</h3>
+        <p>Discover the beauty of Kumaraswamy Temple.</p>
+      </div>
+      <div class="card" onclick="openBhagyaPark()">
+        <img src="https://pbs.twimg.com/media/FT7JwTbaMAARaVv.jpg" alt="Bhagya">
+        <h3>Visit Bhagya Amusement Park</h3>
+        <p>Slide into a new world of amusement</p>
+      </div>
+      <div class="card" onclick="openDarojiSlothBearSanctuary()">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.9LCiPwjfpL3j1JwfQdVwFwHaFj&pid=Api&P=0&h=180" alt="Daroji Sloth Bear Sanctuary">
+        <h3>Visit Daroji Sloth Bear Sanctuary</h3>
+        <p>Go on a wildlife adventure at Daroji Sloth Bear Sanctuary.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openBallariFort() {
+      window.open("ballari_fort.html", "_blank");
+    }
+
+    function openKumaraswamyTemple() {
+      window.open("kumaraswamy_temple.html", "_blank");
+    }
+    function openBhagyaPark() {
+      window.open("bhagya_park.html", "_blank");
+    }
+
+    function openDarojiSlothBearSanctuary() {
+      window.open("daroji_sloth_bear_sanctuary.html", "_blank");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafe and Chats - Hospet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Left Navigation Bar Styles */
+    nav {
+      width: 200px;
+      background-color: #333;
+      height: 100%;
+      padding-top: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+  
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  
+    nav ul li {
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      padding: 12px 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    /* Hover effect on links */
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #444;
+      padding-left: 0;
+    }
+
+    /* Main content container */
+    .main-content {
+      margin-left: 220px; /* Space for the navigation bar */
+      padding: 20px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      flex-grow: 1;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      padding: 40px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      width: 350px;
+      height: 450px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      flex-direction: column;
+    }
+
+    .card img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      color: #333;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .back-link {
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      background-color: #444;
+    }
+
+    .back-link-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 1);
+      padding: 20px;
+      z-index: 1000;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    #modal-content {
+      text-align: left;
+    }
+
+    #modal h2 {
+      font-size: 28px;
+      color: #333;
+    }
+
+    #modal p {
+      font-size: 18px;
+      color: #666;
+      margin-top: 15px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .rating span {
+      color: gold;
+      margin-left: 5px;
+    }
+
+    #modal button {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    #modal button:hover {
+      background-color: #444;
+    }
+
+    #modal-reviews {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .card-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 80%;
+      }
+
+      nav {
+        width: 100%;
+        height: auto;
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Left Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="hospet.html">Home</a></li>
+      <li><a href="hospet_hotels.html">Hotel</a></li>
+      <li><a href="hospet_things_to_do.html">Things to do</a></li>
+      <li><a href="hospet_restaurants.html" class="active">Cafe and Chats</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Cafes and Chats in Hospet</h1>
+
+    <div class="card-container">
+      <div class="card" onclick="showDetails('Sky Cafe')">
+        <img src="https://b.zmtcdn.com/data/pictures/7/20658777/6feacc02f32c73012dcfe6ec31912c1b.jpg" alt="Cafe Bliss">
+        <div>
+          <h3>Sky cafe</h3>
+          <p>Located in the vibrant heart of isr road, Sky Cafe Veg Restaurant is a cherished culinary haven where tradition meets innovation.</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="showDetails('Teaology')">
+        <img src="https://b.zmtcdn.com/data/pictures/0/20076260/d316912e4346a3f61294f1f158eacb78.jpg" alt="Teaology">
+        <div>
+          <h3>Teaology</h3>
+          <p>Tealogy is recognized as the top tea franchise in Hospet, distinguished by its innovative Kulhad Chai concept. This unique approach serves tea in traditional clay cups, or "kulhads," which enhances the tea-drinking experience with a touch of nostalgia and sustainability.</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="showDetails('Frespresso Cafe')">
+        <img src="https://static.where-e.com/India/Karnataka_State/Kalaburagi_Division/Frespresso-Cafe_a8b8bfc56e0f814d35346645ce9883ba.jpg" alt="Heritage Snacks">
+        <div>
+          <h3>Frespresso Cafe</h3>
+          <p>A Coffee Shop with International Coffee's, Pizza Burger Chinese Sandwich Pasta Cakes Waffles.</p>
+        </div>
+      </div>
+
+      <div class="card" onclick="showDetails('Lassi shop')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5SvMUZmvzMg8_usFOXhpPmyRNHJKCv-cWvw&s" alt="Chai Junction">
+        <div>
+          <h3>Lassi shop</h3>
+          <p>LASSI DAY CAFE is a “Quick Service Café” & a small format “150 to 200 sqft SHOP” Fast Food Retail chain – We Contribute & Grow.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="back-link-container">
+      <a href="hospet.html" class="back-link">Back to Hospet</a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div id="modal-content">
+      <h2 id="modal-title"></h2>
+      <p id="modal-description"></p>
+      <div id="modal-address"></div>
+      <div id="modal-hours"></div>
+      <div id="modal-phone"></div>
+      <div id="modal-rating" class="rating"></div>
+      <div id="modal-amount"></div>
+      <div id="modal-reviews"></div>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function showDetails(cafe) {
+      const details = {
+        "Sky Cafe": {
+          title: "Sky Cafe",
+          description: "A peaceful cafe with delicious beverages and snacks.",
+          address: "Reliance digital seller complex, College Rd, Basaveshwara Extension, Hosapete, Karnataka 583201",
+          hours: "10 AM - 11 PM",
+          phone: "1234567890",
+          rating: "⭐⭐⭐⭐☆",
+          amount: "₹200 - ₹400",
+          reviews: [
+            "A cozy spot! Loved the Dal Khichdi! - Priya",
+            "The ambiance is so calming. Perfect for weekends! - Rohan",
+            "Friendly staff and great coffee! - Ananya"
+          ]
+        },
+        "Teaology": {
+          title: "Teaology",
+          description: "A trendy spot for fusion snacks and drinks.",
+          address: "Shanti Nagar, Stone Charoit, College Rd, behind Trends, Hosapete, Karnataka 583201",
+          hours: "10 AM - 10 PM",
+          phone: "0987654321",
+          rating: "⭐⭐⭐⭐⭐",
+          amount: "₹300 - ₹500",
+          reviews: [
+            "Best café experience in town! - Deepak",
+            "The decor is amazing, and so is the coffee! - Meera",
+            "Perfect place for a quick snack. - Kiran"
+          ]
+        },
+        "Frespresso Cafe": {
+          title: "Frespresso Cafe",
+          description: "Traditional snacks with a modern twist.",
+          address: "College Rd, opposite Taluk office, above UMA TVS Showroom, Hosapete, Karnataka 583201",
+          hours: "12 pM - 11 PM",
+          phone: "1122334455",
+          rating: "⭐⭐⭐⭐☆",
+          amount: "₹150 - ₹350",
+          reviews: [
+            "Great ambiance for working or chilling! - Vivek",
+            "Try their signature espresso! - Nisha",
+            "Friendly staff and delicious coffee. - Arvind"
+          ]
+        },
+        "Lassi shop": {
+          title: "Lassi shop",
+          description: "Perfect for lassi lovers and quick snacks.",
+          address: "79GP+7RM Shanbhag Circle, College Rd, opp. Swathi Hotel, Hosapete, Karnataka 583201",
+          hours: "10 AM - 11 PM",
+          phone: "6677889900",
+          rating: "⭐⭐⭐⭐⭐",
+          amount: "₹100 - ₹250",
+          reviews:[
+            "The best momos I’ve ever had! Must try the spicy Schezwan dip! - Akshay",
+            "Great taste and affordable prices. Highly recommended. - Neha",
+            "Loved the chicken momos, they were juicy and flavorful! - Arvind"
+          ]
+        }
+      };
+      const cafeDetails = details[cafe];
+      document.getElementById('modal-title').textContent = details[cafe].title;
+      document.getElementById('modal-description').textContent = details[cafe].description;
+      document.getElementById('modal-address').textContent = `Address: ${details[cafe].address}`;
+      document.getElementById('modal-hours').textContent = `Hours: ${details[cafe].hours}`;
+      document.getElementById('modal-phone').textContent = `Phone: ${details[cafe].phone}`;
+      document.getElementById('modal-rating').innerHTML = `Rating: ${details[cafe].rating}`;
+      document.getElementById('modal-amount').textContent = `Approximate Cost: ${details[cafe].amount}`;
+      document.getElementById('modal-reviews').innerHTML = `Customer Reviews: <ul>${cafeDetails.reviews.map(review => `<li>${review}</li>`).join('')}</ul>`;
+      document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

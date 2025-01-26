@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Planner</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Include Font Awesome for Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"> <!-- External CSS for Sign In and Sign Up form -->
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    /* Header */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #fff;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #333;
+      margin: 0;
+    }
+
+    .header-buttons a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 20px;
+    }
+
+    .header-buttons a:hover {
+      color: #ccc;
+    }
+
+    /* Search Section */
+    .search-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .search-container h2 {
+      font-size: 60px;
+      color: #333;
+    }
+
+    .search-bar {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-bar input {
+      width: 500px;
+      padding: 15px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 10px 0 0 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      padding-left: 50px;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #333;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .search-bar button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 0 10px 10px 0;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .search-bar button:hover {
+      background-color: #555;
+    }
+
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #000;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .nav-links a i {
+      font-size: 20px;
+    }
+
+    .nav-links a:hover {
+      background-color: #333;
+      color: #fff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Add selected styling to simulate hover effect on click */
+    .nav-links a.selected {
+      background-color: #333;
+      color: white;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Virtual Guide Section */
+    .virtual-guide-section {
+      display: flex;
+      margin: 50px auto;
+      width: 90%;
+      max-width: 1200px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .virtual-guide-section img {
+      width: 50%;
+      object-fit: cover;
+    }
+
+    .virtual-guide-content {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .virtual-guide-content h2 {
+      font-size: 32px;
+      color: #333;
+      margin: 0;
+    }
+
+    .virtual-guide-content p {
+      font-size: 18px;
+      color: #666;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .virtual-guide-content a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .virtual-guide-content a:hover {
+      background-color: #555;
+    }
+
+    /* Chatbot Styles */
+    .chatbot-icon {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #333;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-icon:hover {
+      background-color: #555;
+    }
+
+    .chatbot-dialog {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 300px;
+      max-height: 400px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+    }
+
+    .chatbot-header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .chatbot-content {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .chatbot-content .question {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      background-color: #d1f7c4;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color 0.3s;
+    }
+
+    .chatbot-content .question:hover {
+      background-color: #e0e0e0;
+    }
+
+    .chatbot-content .answer {
+      align-self: flex-start;
+      width: 80%;
+      padding: 8px;
+      margin: 5px 0;
+      background-color: #fff;
+      border-radius: 5px;
+      text-align: left;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .chatbot-footer {
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header-container">
+    <h1>TravelSync</h1>
+    <div class="header-buttons">
+      <a href="contact_us.html" id="contactUsButton">Contact Us</a>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="search-container">
+    <h2 id="greetingMessage">Where to?</h2>
+    <div class="nav-links">
+      <a href="#" id="searchLink" class="selected" onclick="updateSearchPlaceholder('search')"><i class="fas fa-search"></i> Search</a>
+      <a href="#" id="hotelsLink" onclick="updateSearchPlaceholder('hotels')"><i class="fas fa-bed"></i> Hotels</a>
+      <a href="#" id="thingsToDoLink" onclick="updateSearchPlaceholder('things-to-do')"><i class="fas fa-umbrella-beach"></i> Things to Do</a>
+      <a href="#" id="restaurantsLink" onclick="updateSearchPlaceholder('restaurants')"><i class="fas fa-utensils"></i> Restaurants</a>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for a destination" onkeypress="handleKeyPress(event)">
+      <button onclick="handleSearch()"><i class="fas fa-search"></i></button>
+    </div>
+  </div>
+
+  <!-- Virtual Guide Section -->
+  <div class="virtual-guide-section">
+    <img src="https://images.pexels.com/photos/7235804/pexels-photo-7235804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Virtual Guide Image">
+    <div class="virtual-guide-content">
+      <h1>Travel Assistant- Syncing your whole travel in one go</h1>
+      <p>Discover new destinations and make your travel experience easier with our virtual guide. From planning to execution, we’ve got you covered!</p>
+      <a href="http://127.0.0.1:5000">Explore Now</a>
+    </div>
+  </div>
+
+  <!-- -->
+
+
+  <!-- Chatbot Icon -->
+  <div class="chatbot-icon" onclick="toggleChatbot()">
+    <i class="fas fa-comments"></i>
+  </div>
+
+  <!-- Chatbot Dialog -->
+  <div class="chatbot-dialog" id="chatbotDialog">
+    <div class="chatbot-header">
+      <h3>TravelBud- Your Chatbot</h3>
+    </div>
+    <div class="chatbot-content" id="chatbotContent">
+      <div class="question" onclick="showAnswer(this, 'help')">How can I help you?</div>
+      <div class="question" onclick="showAnswer(this, 'feature')">What are the features of this app?</div>
+      <div class="question" onclick="showAnswer(this, 'login')">How to log in?</div>
+      <div class="question" onclick="showAnswer(this, 'register')">How to register?</div>
+      <div class="question" onclick="showAnswer(this, 'search')">How to search?</div>
+      <div class="question" onclick="showAnswer(this, 'hotels')">How to find hotels?</div>
+      <div class="question" onclick="showAnswer(this, 'restaurants')">How to find restaurants?</div>
+      <div class="question" onclick="showAnswer(this, 'thingsToDo')">What to do at my destination?</div>
+      <div class="question" onclick="showAnswer(this, 'contact')">How to contact us?</div>
+      <div class="question" onclick="showAnswer(this, 'about')">About the app</div>
+    </div>
+    <div class="chatbot-footer">
+      <button onclick="toggleChatbot()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function updateGreeting() {
+      const hour = new Date().getHours();
+      const greeting = hour >= 5 && hour < 12 ? "Good Morning, Traveller!" :
+                       hour >= 12 && hour < 17 ? "Good Afternoon, Traveller!" :
+                       "Good Evening, Traveller!";
+      document.getElementById('greetingMessage').innerText = greeting;
+    }
+    updateGreeting();
+
+    function updateSearchPlaceholder(section) {
+      const placeholders = {
+        hotels: "Search for a Hotel or Destination",
+        restaurants: "Search for a Restaurant or Destination",
+        "things-to-do": "Search for an Activity or Destination",
+        search: "Search for a destination"
+      };
+
+      const sectionToIdMap = {
+        hotels: "hotelsLink",
+        restaurants: "restaurantsLink",
+        "things-to-do": "thingsToDoLink",
+        search: "searchLink"
+      };
+
+      document.getElementById("searchInput").placeholder = placeholders[section];
+      Object.values(sectionToIdMap).forEach(link => document.getElementById(link).classList.remove('selected'));
+      document.getElementById(sectionToIdMap[section]).classList.add('selected');
+    }
+
+    function handleSearch() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const pages = { ballari: "ballari.html", hospet: "hospet.html" };
+      if (pages[query]) {
+        window.location.href = pages[query];
+      } else {
+        alert("City not found. Try Ballari or Hospet.");
+      }
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    }
+
+    function toggleChatbot() {
+      const chatbot = document.getElementById("chatbotDialog");
+      chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
+    }
+
+    function showAnswer(button, question) {
+      const answers = {
+        help: "I'm here to guide you through the app and help you explore your destination, find restaurants, hotels, and things to do, and provide personalized suggestions.",
+        feature: "Our app is completely open-source! It allows you to search for destinations, explore detailed information about places, restaurants, and things to do. You can also access our exclusive Virtual Guide feature by setting up an account. We do not offer hotel bookings, but we provide detailed information to help you make informed decisions.",
+        login: "Our app is open-source, and you can access most of its features without logging in. However, to use the exclusive Virtual Guide feature, you will need to set up an account. Simply click on the 'Sign In' button and create your account to get started.",
+        register: "Registration is optional but required to access our exclusive Virtual Guide feature. To register, click on the 'Sign In' button and select the 'Register' option. Once you've created an account, you'll have access to the Virtual Guide and other personalized features.",
+        search: "Searching is simple! You can use the Search Bar on the homepage to search for a destination, hotel, restaurant, or activity. Once you enter your query, the app will display relevant results, including places to visit, where to eat, and what to do. The search function works across various sections like Hotels, Restaurants, and Things to Do, and will show information about the selected destinations like Ballari or Hospet. Just type the name of the destination or activity, and you'll get helpful details!",
+        hotels: `While we do not provide hotel booking services, you can still explore hotels in your destination. To find hotels: 
+                    Navigate to the Hotels section from the main menu.
+                    You can search for hotels by typing the destination name (like Ballari or Hospet) into the search bar.
+                    The app will display a list of hotels available in that destination, complete with details like reviews, and ratings.
+                    Use this information to decide which hotel meets your needs.`,
+        restaurants: `o find restaurants:
+Click on the Restaurants or Café section from the navigation menu.
+Enter the name of the destination (e.g., Ballari or Hospet) in the search bar.
+Browse the list of dining options that are available in that location. You'll find detailed information such as ratings, contact details, and customer reviews.
+This feature is perfect for exploring local dining options while you plan your trip.
+`,
+        thingsToDo: `To discover things to do:
+Go to the Things to Do section in the menu.
+Enter the name of your destination, such as Ballari or Hospet, into the search bar.
+You'll be presented with a list of activities and attractions at the selected location. From sightseeing spots to unique local experiences, we cover a variety of activities that will enrich your travel experience.
+Use this information to plan your activities and make the most of your trip.`,
+        contact: `If you have any questions or need assistance, you can reach out to us through the Contact Us section. To contact our support team:
+Navigate to the Contact Us section in the app.
+You'll find details for reaching our support team via email, or you can use the provided contact form to send a message directly to us.
+We're happy to help with any inquiries you have regarding the app or your travel plans!
+`,
+        about: `TravelSync is an open-source app designed to help you plan your trips seamlessly. It provides all the essential details you need to make informed decisions about your destinations, including hotels, restaurants, activities, and more. While it is free to use and explore, we offer an exclusive Virtual Guide feature for registered users. The Virtual Guide helps you navigate your destination with personalized recommendations. As an open-source platform, TravelSync continues to evolve with contributions from developers like you. Our mission is to make travel planning easier and more informative for everyone.`
+      };
+
+      const existingAnswer = button.nextElementSibling;
+      if (existingAnswer && existingAnswer.classList.contains('answer')) {
+        existingAnswer.remove();
+      } else {
+        const answerDiv = document.createElement("div");
+        answerDiv.classList.add("answer");
+        answerDiv.textContent = answers[question];
+        button.parentNode.insertBefore(answerDiv, button.nextSibling);
+      }
+    }
+  </script>
+
+</body>
+</html>

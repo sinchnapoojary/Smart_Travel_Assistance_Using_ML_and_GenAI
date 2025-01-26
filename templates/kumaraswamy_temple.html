@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kumaraswamy Temple</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      padding-top: 20px;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+    #result {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 15px;
+    }
+    #status {
+      font-size: 1em;
+      color: #888;
+      margin-top: 10px;
+    }
+    .details {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .details h2 {
+      color: #333;
+      font-size: 1.3em;
+    }
+    .details p {
+      margin: 10px 0;
+    }
+    .reviews {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .reviews h2 {
+      font-size: 1.3em;
+      color: #333;
+    }
+    .review {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Kumaraswamy Temple</h1>
+  <img src="https://lh5.googleusercontent.com/p/AF1QipPZDSbgNMTgXDuQQqRNK1avS_QapLAPHYHud714=w675-h390-n-k-no" alt="Kumaraswamy Temple">
+  <p>Explore the beautiful Kumaraswamy Temple!</p>
+
+  <div class="details">
+    <h2>Description:</h2>
+    <p>Kumaraswamy Temple, located in Krauncha Giri near Sandur in Karnataka, is a historic temple complex dating back to the 8th and 10th centuries. The temple is known for its ancient architecture and is situated about 10 km from Sandur in Bellary District. It features two Hindu temples within the same compound, both of which are protected monuments of historical significance.</p>
+
+    <h2>Address:</h2>
+    <p>Devi Nagar, Ballari, Karnataka 583104</p>
+
+    <h2>Established:</h2>
+    <p>8th and 10th century</p>
+
+    <h2>Hours:</h2>
+    <p>8 AM - 9 PM</p>
+
+    <h2>Best Visiting Timings</h2>
+    <p>Morning hours (6 AM - 9 AM) for a peaceful experience.</p>
+
+
+  </div>
+
+  <div class="reviews">
+    <h2>Reviews:</h2>
+    <div class="review">
+      <strong>Manoj K:</strong> 
+      "A beautiful and peaceful temple with amazing architecture. The scenic route to the temple is just as enjoyable as the temple itself. Highly recommended for history enthusiasts."
+    </div>
+    <div class="review">
+      <strong>Sneha R:</strong> 
+      "A hidden gem! The intricate carvings and serene atmosphere make it a perfect spot for a spiritual retreat. It’s less crowded on weekdays, making it ideal for a calm visit."
+    </div>
+    <div class="review">
+      <strong>Rajesh P:</strong>
+      "The Kumaraswamy Temple holds a unique charm of its own. The historical significance and the ancient architectural design are a must-see. Definitely worth visiting if you’re in the region."
+    </div>
+  </div>
+
+  <p id="result" style="display: none;">
+    <strong>Predicted Crowd Level:</strong> <span id="predicted-crowd"></span>% <br>
+    <span id="message"></span>
+  </p>
+
+  <script>
+    // Call the backend API to fetch the prediction
+    fetch('/predict_crowd', { method: 'GET' })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('status').style.display = 'none';
+
+        if (data.error) {
+          document.getElementById('status').textContent = 
+            "Unable to fetch prediction data. Please try again later.";
+          document.getElementById('status').style.display = 'block';
+          return;
+        }
+
+        document.getElementById('predicted-crowd').textContent = data.predicted_crowd;
+        document.getElementById('message').textContent = data.message;
+        document.getElementById('result').style.display = 'block';
+      })
+      .catch(error => {
+        console.error("Error fetching prediction:", error);
+        document.getElementById('status').textContent = 
+          "Error predicting crowd levels. Please try again later.";
+      });
+  </script>
+
+</body>
+</html>

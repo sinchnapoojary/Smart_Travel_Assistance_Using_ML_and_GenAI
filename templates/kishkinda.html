@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kishkinda Resort</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      padding-top: 20px;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+    #result {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 15px;
+    }
+    #status {
+      font-size: 1em;
+      color: #888;
+      margin-top: 10px;
+    }
+    .details {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .details h2 {
+      color: #333;
+      font-size: 1.3em;
+    }
+    .details p {
+      margin: 10px 0;
+    }
+    .reviews {
+      text-align: left;
+      margin: 20px;
+      color: #333;
+      font-size: 1.1em;
+    }
+    .reviews h2 {
+      color: #333;
+      font-size: 1.3em;
+    }
+    .review-item {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Kishkinda Resort</h1>
+  <div class="card" onclick="openKishkindaPark()">
+    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/58/66/ea/kishkinda-heritage-resort.jpg?w=700&h=-1&s=1" alt="Kishkinda Resort">
+    <p>Experience the joy of nature</p>
+  </div>
+
+  <div class="details">
+    <h2>Description:</h2>
+    <p>Kishkinda Heritage Resort offers quality and memorable hospitality services for our valuable guests. With over 13 years of goodwill in the hospitality trade, the resort is fondly called the "King of Rock Garden." It is a rare location that holds both mythological and historical significance.</p>
+
+    <h2>Address:</h2>
+    <p>485, Near Stone Bridge, ANEGUNDI, Sanapur, Karnataka 583234</p>
+
+    <h2>Phone:</h2>
+    <p>082176 87224</p>
+
+    <h2>Hours:</h2>
+    <p>Open 24 hours</p>
+
+    <h2>Best Visiting Timings</h2>
+    <p>Midday (12 PM - 4 PM) to enjoy water rides and pools.    </p>
+
+  </div>
+
+  <div class="reviews">
+    <h2>Visitor Reviews:</h2>
+    <div class="review-item">
+      <strong>John D.:</strong> "A wonderful experience! The ambiance and natural beauty are unmatched. The staff was friendly and very accommodating."
+    </div>
+    <div class="review-item">
+      <strong>Samantha P.:</strong> "Loved the rock garden and the peaceful vibe. Great place for a weekend getaway. Highly recommended!"
+    </div>
+    <div class="review-item">
+      <strong>Rajesh K.:</strong> "A delightful stay with excellent hospitality. Perfect for families and nature lovers."
+    </div>
+  </div>
+
+  <p id="result" style="display: none;">
+    <strong>Predicted Crowd Level:</strong> <span id="predicted-crowd"></span>% <br>
+    <span id="message"></span>
+  </p>
+
+  <script>
+    // Fetch the crowd prediction data
+    fetch('/predict_crowd', { method: 'GET' })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('status').style.display = 'none';
+
+        if (data.error) {
+          document.getElementById('status').textContent = 
+            "Unable to fetch prediction data. Please try again later.";
+          document.getElementById('status').style.display = 'block';
+          return;
+        }
+
+        document.getElementById('predicted-crowd').textContent = data.predicted_crowd;
+        document.getElementById('message').textContent = data.message;
+        document.getElementById('result').style.display = 'block';
+      })
+      .catch(error => {
+        console.error("Error fetching prediction:", error);
+        document.getElementById('status').textContent = 
+          "Error predicting crowd levels. Please try again later.";
+      });
+  </script>
+
+</body>
+</html>
