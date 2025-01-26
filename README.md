@@ -105,14 +105,17 @@ Key features include real-time weather updates, crowd density predictions, perso
 
 ### 1. Homepage  
 The main interface where users can search for destinations and access real-time travel assistance.  
+
 ![Homepage](screenshots/STA_SS1.png)  
 
 ### 2. Things to Do and Crowd Prediction  
 Detailed destination page showing attractions, recommendations, and real-time crowd density predictions.  
+
 ![Things to Do and Crowd Prediction](screenshots/STA_SS2.png)  
 
 ### 3. Travel Assistant  
 A virtual guide that generates personalized itineraries and provides day-wise travel plans with weather forecasts.  
+
 ![Travel Assistant](screenshots/STA_SS3.png)  
   
 ---
