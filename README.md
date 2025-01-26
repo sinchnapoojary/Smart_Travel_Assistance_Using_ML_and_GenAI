@@ -1,4 +1,4 @@
-#TravelSycn- Your Smart Travel Buddy
+##TravelSync- Your Smart Travel Buddy
 
 ## Overview
 TravelSync is a smart travel assistance platform powered by Machine Learning (ML) and Generative AI (GenAI). It is designed to simplify and enhance travel planning by offering real-time data, AI-driven recommendations, and key tools for a seamless experience. The platform addresses inefficiencies in traditional travel planning by integrating multiple functionalities into one comprehensive solution.
@@ -110,7 +110,7 @@ making it an intuitive and reliable travel planning tool.
 
 ---
 
-##Project Associates
+## Project Associates
 1. Shreeharsh Joshi
 2. Shreyas C
 3. Sinchana Poojary
