@@ -145,3 +145,11 @@ Key functionalities include **real-time weather updates**, **crowd density predi
 4. Enhanced ANN models with additional datasets for improved accuracy.  
 
 ---
+
+## Project Associates
+
+- Shreeharsh Joshi
+- Shreyas C
+- Sinchana Poojary
+- Sreevalli R
+
