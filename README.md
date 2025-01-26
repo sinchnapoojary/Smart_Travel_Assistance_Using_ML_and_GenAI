@@ -1,5 +1,3 @@
----
-
 # TravelSync - Your Smart Travel Buddy  
 
 ## Overview  
@@ -132,5 +130,3 @@ A virtual guide that generates personalized itineraries and provides day-wise tr
 2. Shreyas C  
 3. Sinchana Poojary  
 4. Sreevalli R  
-
----
